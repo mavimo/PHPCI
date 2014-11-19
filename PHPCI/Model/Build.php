@@ -121,9 +121,6 @@ class Build extends BuildBase
 
     protected function getZeroConfigPlugins(Builder $builder)
     {
-        $pluginDir = PHPCI_DIR . 'PHPCI/Plugin/';
-        $dir = new \DirectoryIterator($pluginDir);
-
         $config = array(
             'build_settings' => array(
                 'ignore' => array(
@@ -132,24 +129,10 @@ class Build extends BuildBase
             )
         );
 
-        foreach ($dir as $item) {
-            if ($item->isDot()) {
-                continue;
-            }
-
-            if (!$item->isFile()) {
-                continue;
-            }
-
-            if ($item->getExtension() != 'php') {
-                continue;
-            }
-
-            $className = '\PHPCI\Plugin\\'.$item->getBasename('.php');
-
+        foreach (get_declared_classes() as $className) {
             $reflectedPlugin = new \ReflectionClass($className);
 
-            if (!$reflectedPlugin->implementsInterface('\PHPCI\ZeroConfigPlugin')) {
+            if (!$reflectedPlugin->implementsInterface('\\PHPCI\\ZeroConfigPlugin')) {
                 continue;
             }
 
