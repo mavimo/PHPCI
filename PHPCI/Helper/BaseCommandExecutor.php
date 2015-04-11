@@ -252,6 +252,11 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
         $this->buildPath = $path;
     }
 
+    /**
+     * Get the list of folder where we can search executables.
+     *
+     * @return string[] List of folders
+     */
     protected function getExecutableFolders()
     {
         $folders = array();
