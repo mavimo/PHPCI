@@ -87,7 +87,7 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
         $rootDir,
         Environment $environment = null,
         $quiet = false,
-        &$verbose = false
+        $verbose = false
     ) {
         $this->logger = $logger;
         $this->quiet = $quiet;
@@ -238,7 +238,7 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      *
      * @param string $binary
      *
-     * @return null|\SplFileInfo
+     * @return null|SplFileInfo
      */
     abstract protected function findGlobalBinary($binary);
 
@@ -259,23 +259,16 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      */
     protected function getExecutableFolders()
     {
-        $folders = array();
+        // List of all possible folders.
+        $folders = array_merge(array(
+            $this->rootDir,
+            $this->rootDir . 'vendor/bin/',
+        ), $this->environment->getPaths());
 
-        if (file_exists($this->rootDir) &&
-            is_dir($this->rootDir)) {
-            $folders[] = $this->rootDir;
-        }
-
-        if (file_exists($this->rootDir . 'vendor/bin/') &&
-            is_dir($this->rootDir . 'vendor/bin/')) {
-           $folders[] = $this->rootDir . 'vendor/bin/';
-        }
-
-        foreach ($this->environment->getPaths() as $folder) {
-            if (file_exists($folder) && is_dir($folder)) {
-                $folders[] = $folder;
-            }
-        }
+        // Filter to use only folders that exist.
+        $folders = array_filter($folders, function ($folder) {
+            return (file_exists($folder) && is_dir($folder));
+        });
 
         return $folders;
     }
