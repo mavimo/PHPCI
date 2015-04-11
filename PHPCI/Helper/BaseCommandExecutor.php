@@ -206,13 +206,15 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
         foreach ($binary as $bin) {
             $this->logger->log(Lang::get('looking_for_binary', $bin), LogLevel::DEBUG);
 
+            $folders = array_merge(array(
+                $this->rootDir,
+                $this->rootDir . 'vendor/bin/',
+            ), $this->environment->getPaths());
+
             $files = $finder
                 ->files()
                 ->followLinks()
-                ->in(array(
-                    $this->rootDir,
-                    $this->rootDir . 'vendor/bin/',
-                ))
+                ->in($folders)
                 ->name($bin)
                 ->filter(function (\SplFileInfo $file) {
                     $file->isExecutable();
