@@ -148,7 +148,7 @@ class XMPP implements \PHPCI\Plugin
     */
     public function execute()
     {
-        $sendxmpp = $this->phpci->findBinary('/usr/bin/sendxmpp');
+        $sendxmpp = $this->phpci->findBinary('sendxmpp');
 
         if (!$sendxmpp) {
             $this->phpci->logFailure('Could not find sendxmpp.');
