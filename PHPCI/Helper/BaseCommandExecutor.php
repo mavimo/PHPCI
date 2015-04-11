@@ -16,6 +16,8 @@ use PHPCI\Helper\Environment;
 use PHPCI\Helper\Lang;
 use PHPCI\Logging\BuildLogger;
 use Psr\Log\LogLevel;
+use Symfony\Component\Finder\Finder;
+use \SplFileInfo;
 
 /**
  * Handles running system commands with variables.
@@ -199,34 +201,33 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      */
     public function findBinary($binary)
     {
-        $binaryPath = null;
-        if (is_string($binary)) {
-            $binary = array($binary);
-        }
+        $finder = new Finder();
 
         foreach ($binary as $bin) {
             $this->logger->log(Lang::get('looking_for_binary', $bin), LogLevel::DEBUG);
 
-            if (is_file($this->rootDir . $bin)) {
-                $this->logger->log(Lang::get('found_in_path', 'root', $bin), LogLevel::DEBUG);
-                $binaryPath = $this->rootDir . $bin;
-                break;
-            }
+            $files = $finder
+                ->files()
+                ->followLinks()
+                ->in(array(
+                    $this->rootDir,
+                    $this->rootDir . 'vendor/bin/',
+                ))
+                ->name($bin)
+                ->filter(function (\SplFileInfo $file) {
+                    $file->isExecutable();
+                });
 
-            if (is_file($this->rootDir . 'vendor/bin/' . $bin)) {
-                $this->logger->log(Lang::get('found_in_path', 'vendor/bin', $bin), LogLevel::DEBUG);
-                $binaryPath = $this->rootDir . 'vendor/bin/' . $bin;
-                break;
-            }
+            $file = $files ? reset($files) : $this->findGlobalBinary($bin);
 
-            $findCmdResult = $this->findGlobalBinary($bin);
-            if (is_file($findCmdResult)) {
-                $this->logger->log(Lang::get('found_in_path', '', $bin), LogLevel::DEBUG);
-                $binaryPath = $findCmdResult;
-                break;
+            if ($file) {
+                $this->logger->log(
+                    Lang::get('found_in_path', $file->getPath(), $bin),
+                    LogLevel::DEBUG
+                );
+                return $file->getRealpath();
             }
         }
-        return $binaryPath;
     }
 
     /**
@@ -234,7 +235,7 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      *
      * @param string $binary
      *
-     * @return null|string
+     * @return null|\SplFileInfo
      */
     abstract protected function findGlobalBinary($binary);
 

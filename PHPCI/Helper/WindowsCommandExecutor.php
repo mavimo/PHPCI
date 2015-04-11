@@ -10,6 +10,7 @@
 namespace PHPCI\Helper;
 
 use PHPCI\Helper\BaseCommandExecutor;
+use SplFileInfo;
 
 /**
  * Windows-specific extension of the CommandExecutor class.
@@ -28,7 +29,7 @@ class WindowsCommandExecutor extends BaseCommandExecutor
     protected function findGlobalBinary($binary)
     {
         if ($this->executeCommand(array('where "%s"', $binary))) {
-            return $this->getLastOutput();
+            return SplFileInfo($this->getLastOutput());
         }
     }
 }
