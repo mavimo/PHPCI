@@ -9,21 +9,26 @@
 
 namespace PHPCI\Helper;
 
+use PHPCI\Helper\BaseCommandExecutor;
+
 /**
  * Unix/Linux specific extension of the CommandExecutor class.
+ *
  * @package PHPCI\Helper
  */
 class UnixCommandExecutor extends BaseCommandExecutor
 {
     /**
      * Uses 'which' to find a system binary by name.
+     *
      * @param string $binary
+     *
      * @return null|string
      */
     protected function findGlobalBinary($binary)
     {
         if ($this->executeCommand(array('which "%s"', $binary))) {
-            return trim($this->getLastOutput());
+            return $this->getLastOutput();
         }
     }
 }

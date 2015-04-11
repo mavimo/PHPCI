@@ -10,18 +10,22 @@
 
 namespace PHPCI\Helper;
 
-use \PHPCI\Logging\BuildLogger;
-use Psr\Log\LogLevel;
+use \InvalidArgumentException;
+use PHPCI\Helper\CommandExecutorInterface;
+use PHPCI\Helper\Environment;
 use PHPCI\Helper\Lang;
+use PHPCI\Logging\BuildLogger;
+use Psr\Log\LogLevel;
 
 /**
  * Handles running system commands with variables.
+ *
  * @package PHPCI\Helper
  */
-abstract class BaseCommandExecutor implements CommandExecutor
+abstract class BaseCommandExecutor implements CommandExecutorInterface
 {
     /**
-     * @var \PHPCI\Logging\BuildLogger
+     * @var BuildLogger
      */
     protected $logger;
 
@@ -80,7 +84,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
         BuildLogger $logger,
         $rootDir,
         Environment $environment = null,
-        &$quiet = false,
+        $quiet = false,
         &$verbose = false
     ) {
         $this->logger = $logger;
@@ -159,15 +163,15 @@ abstract class BaseCommandExecutor implements CommandExecutor
      */
     protected function formatArguments(array $arguments)
     {
-        switch (count($arguments)) {
-            case 0:
-                // todo: throw an exception ?
-                return '';
-            case 1:
-                return $arguments[0];
-            default:
-                return call_user_func_array('sprintf', $arguments);
+        if (count($arguments) === 0) {
+            throw new InvalidArgumentException();
         }
+
+        if (count($arguments) === 1) {
+            return $arguments[0];
+        }
+
+        return call_user_func_array('sprintf', $arguments);
     }
 
     /**
@@ -175,7 +179,7 @@ abstract class BaseCommandExecutor implements CommandExecutor
      */
     public function getLastOutput()
     {
-        return implode(PHP_EOL, $this->lastOutput);
+        return trim(implode(PHP_EOL, $this->lastOutput));
     }
 
     /**

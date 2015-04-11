@@ -9,21 +9,26 @@
 
 namespace PHPCI\Helper;
 
+use PHPCI\Helper\BaseCommandExecutor;
+
 /**
  * Windows-specific extension of the CommandExecutor class.
+ *
  * @package PHPCI\Helper
  */
 class WindowsCommandExecutor extends BaseCommandExecutor
 {
     /**
-     * Use 'where' on Windows to find a binary, rather than 'which'
+     * Use 'where' on Windows to find a binary, rather than 'which'.
+     *
      * @param string $binary
+     *
      * @return null|string
      */
     protected function findGlobalBinary($binary)
     {
         if ($this->executeCommand(array('where "%s"', $binary))) {
-            return trim($this->getLastOutput());
+            return $this->getLastOutput();
         }
     }
 }
