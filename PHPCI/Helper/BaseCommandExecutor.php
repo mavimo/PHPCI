@@ -201,26 +201,27 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      */
     public function findBinary($binary)
     {
+        $binary = is_array($binary) ? $binary : array($binary);
+
         $finder = new Finder();
+
+        $finder
+            ->files()
+            ->followLinks()
+            ->in($this->getExecutableFolders())
+            ->ignoreUnreadableDirs()
+            ->filter(function (\SplFileInfo $file) {
+                $file->isExecutable();
+            });
 
         foreach ($binary as $bin) {
             $this->logger->log(Lang::get('looking_for_binary', $bin), LogLevel::DEBUG);
 
-            $folders = array_merge(array(
-                $this->rootDir,
-                $this->rootDir . 'vendor/bin/',
-            ), $this->environment->getPaths());
+            $finder->name($bin);
 
-            $files = $finder
-                ->files()
-                ->followLinks()
-                ->in($folders)
-                ->name($bin)
-                ->filter(function (\SplFileInfo $file) {
-                    $file->isExecutable();
-                });
-
-            $file = $files ? reset($files) : $this->findGlobalBinary($bin);
+            $file = $finder->count() > 0 ?
+                $finder->getIterator()->current() :
+                $this->findGlobalBinary($bin);
 
             if ($file) {
                 $this->logger->log(
@@ -249,5 +250,28 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
     public function setBuildPath($path)
     {
         $this->buildPath = $path;
+    }
+
+    protected function getExecutableFolders()
+    {
+        $folders = array();
+
+        if (file_exists($this->rootDir) &&
+            is_dir($this->rootDir)) {
+            $folders[] = $this->rootDir;
+        }
+
+        if (file_exists($this->rootDir . 'vendor/bin/') &&
+            is_dir($this->rootDir . 'vendor/bin/')) {
+           $folders[] = $this->rootDir . 'vendor/bin/';
+        }
+
+        foreach ($this->environment->getPaths() as $folder) {
+            if (file_exists($folder) && is_dir($folder)) {
+                $folders[] = $folder;
+            }
+        }
+
+        return $folders;
     }
 }
