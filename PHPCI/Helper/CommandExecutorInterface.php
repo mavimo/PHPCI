@@ -25,11 +25,13 @@ interface CommandExecutorInterface
 
     /**
      * Find a binary required by a plugin.
+     *
      * @param string $binary
      * @param string $buildPath the current build path
+     *
      * @return null|string
      */
-    public function findBinary($binary, $buildPath = null);
+    public function findBinary($binary);
 
     /**
      * Set the buildPath property.
