@@ -259,17 +259,13 @@ abstract class BaseCommandExecutor implements CommandExecutorInterface
      */
     protected function getExecutableFolders()
     {
-        // List of all possible folders.
-        $folders = array_merge(array(
-            $this->rootDir,
-            $this->rootDir . 'vendor/bin/',
-        ), $this->environment->getPaths());
-
-        // Filter to use only folders that exist.
-        $folders = array_filter($folders, function ($folder) {
-            return (file_exists($folder) && is_dir($folder));
-        });
-
-        return $folders;
+        // List of all possible folders that exists.
+        return array_filter(
+            array_merge(array(
+                $this->rootDir,
+                $this->rootDir . 'vendor/bin/',
+            ), $this->environment->getPaths()),
+            'is_dir'
+        );
     }
 }
