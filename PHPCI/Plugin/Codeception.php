@@ -75,7 +75,7 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
         }
 
         $tapString = file_get_contents(
-            $this->phpci->buildPath . $this->logPath . DIRECTORY_SEPARATOR . 'report.tap.log'
+            $this->buildPath . $this->logPath . DIRECTORY_SEPARATOR . 'report.tap.log'
         );
 
         try {
@@ -124,8 +124,8 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
                 $cmd = 'cd /d "%s" && ' . $codecept . ' run -c "%s" --tap ' . $this->args;
             }
 
-            $configPath = $this->phpci->buildPath . $configPath;
-            $success = $this->phpci->executeCommand($cmd, $this->phpci->buildPath, $configPath);
+            $configPath = $this->buildPath . $configPath;
+            $success = $this->phpci->executeCommand($cmd, $this->buildPath, $configPath);
 
             return $success;
         }
