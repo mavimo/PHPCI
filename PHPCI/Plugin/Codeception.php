@@ -23,22 +23,12 @@ use PHPCI\Plugin\Util\TapParser;
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Codeception implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
 {
     /**
      * @var string
      */
     protected $args = '';
-
-    /**
-     * @var Build
-     */
-    protected $build;
-
-    /**
-     * @var Builder
-     */
-    protected $phpci;
 
     /**
      * @var string|string[] The path (or array of paths) of an yml config for Codeception
@@ -59,8 +49,7 @@ class Codeception implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
      */
     public function __construct(Builder $phpci, Build $build, array $options = array())
     {
-        $this->phpci = $phpci;
-        $this->build = $build;
+        parent::__construct($phpci, $build);
 
         if (isset($options['config'])) {
             $this->configFile = $options['config'];
