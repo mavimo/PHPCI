@@ -23,7 +23,7 @@ use PHPCI\Plugin\Util\TapParser;
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
+class Codeception extends AbstractExecutingPlugin implements PHPCI\ZeroConfigPlugin
 {
     /**
      * @var string
@@ -67,7 +67,7 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
     {
         $success = true;
 
-        $this->phpci->logExecOutput(false);
+        $this->executor->setQuiet(true);
 
         // Run any config files first. This can be either a single value or an array
         if ($this->configFile !== null) {
@@ -92,7 +92,7 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
         $this->build->storeMeta('codeception-errors', $failures);
         $this->build->storeMeta('codeception-data', $output);
 
-        $this->phpci->logExecOutput(true);
+        $this->executor->setQuiet(false);
 
         return $success;
     }
@@ -116,7 +116,7 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
         if (is_array($configPath)) {
             return $this->recurseArg($configPath, array($this, 'runConfigFile'));
         } else {
-            $codecept = $this->phpci->findBinary('codecept');
+            $codecept = $this->executor->findBinary('codecept');
 
             $cmd = 'cd "%s" && ' . $codecept . ' run -c "%s" --tap ' . $this->args;
 
@@ -125,7 +125,7 @@ class Codeception extends AbstractPlugin implements PHPCI\ZeroConfigPlugin
             }
 
             $configPath = $this->buildPath . $configPath;
-            $success = $this->phpci->executeCommand($cmd, $this->buildPath, $configPath);
+            $success = $this->executor->executeCommand($cmd, $this->buildPath, $configPath);
 
             return $success;
         }
