@@ -404,6 +404,14 @@ class Builder implements LoggerAwareInterface
             'Swift_Mailer'
         );
 
+        $pluginFactory->registerResource(
+            function () use ($self) {
+                return $self->buildLogger;
+            },
+            null,
+            'PHPCI\Logging\BuildLogger'
+        );
+
         return $pluginFactory;
     }
 }
