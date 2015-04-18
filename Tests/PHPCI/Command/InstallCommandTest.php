@@ -1,13 +1,20 @@
 <?php
 
-namespace PHPCI\Plugin\Tests\Command;
+/**
+ * PHPCI - Continuous Integration for PHP
+ *
+ * @copyright    Copyright 2015, Block 8 Limited.
+ * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
+ * @link         https://www.phptesting.org/
+ */
+
+namespace Tests\PHPCI\Plugin\Command;
 
 use Symfony\Component\Console\Application;
-use Prophecy\PhpUnit\ProphecyTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Helper\HelperSet;
 
-class InstallCommandTest extends ProphecyTestCase
+class InstallCommandTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
     protected $admin;

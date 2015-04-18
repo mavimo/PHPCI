@@ -1,6 +1,14 @@
 <?php
 
-namespace PHPCI\Helper\Tests;
+/**
+ * PHPCI - Continuous Integration for PHP
+ *
+ * @copyright    Copyright 2015, Block 8 Limited.
+ * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
+ * @link         https://www.phptesting.org/
+ */
+
+namespace Tests\PHPCI\Helper;
 
 use PHPCI\Helper\AnsiConverter;
 use PHPUnit_Framework_TestCase;
