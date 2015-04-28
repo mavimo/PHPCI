@@ -1,7 +1,8 @@
 <?php
 /**
  * PHPCI - Continuous Integration for PHP
- * @copyright    Copyright 2014, Block 8 Limited.
+ *
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -10,14 +11,16 @@ namespace PHPCI\Plugin;
 
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
  * Slack Plugin
+ *
  * @author       Stephen Ball <phpci@stephen.rebelinblue.com>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class SlackNotify implements \PHPCI\Plugin
+class SlackNotify implements PluginInterface
 {
     private $webHook;
     private $room;
@@ -69,8 +72,7 @@ class SlackNotify implements \PHPCI\Plugin
     }
 
     /**
-     * Run the Slack plugin.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {

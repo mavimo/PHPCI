@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -11,15 +11,19 @@ namespace PHPCI\Plugin;
 
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* Clean build removes Composer related files and allows PHPCI users to clean up their build directory.
-* Useful as a precursor to copy_build.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class CleanBuild implements \PHPCI\Plugin
+ * Clean build Plugin
+ *
+ * Removes Composer related files and allows PHPCI users to clean up their build
+ * directory. Useful as a precursor to copy_build.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class CleanBuild implements PluginInterface
 {
     protected $remove;
     protected $phpci;
@@ -45,8 +49,8 @@ class CleanBuild implements \PHPCI\Plugin
     }
 
     /**
-    * Executes Composer and runs a specified command (e.g. install / update)
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $cmd = 'rm -Rf "%s"';
@@ -57,7 +61,7 @@ class CleanBuild implements \PHPCI\Plugin
         $this->phpci->executeCommand($cmd, $this->phpci->buildPath . 'composer.lock');
 
         $success = true;
-        
+
         foreach ($this->remove as $file) {
             $ok = $this->phpci->executeCommand($cmd, $this->phpci->buildPath . $file);
 

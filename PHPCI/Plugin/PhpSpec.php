@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,22 +12,24 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* PHP Spec Plugin - Allows PHP Spec testing.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpSpec implements PHPCI\Plugin
+ * PHP Spec Plugin - Allows PHP Spec testing.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpSpec implements PluginInterface
 {
     /**
-     * @var \PHPCI\Builder
+     * @var Builder
      */
     protected $phpci;
 
     /**
-     * @var \PHPCI\Model\Build
+     * @var Build
      */
     protected $build;
 
@@ -38,6 +40,7 @@ class PhpSpec implements PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -50,8 +53,8 @@ class PhpSpec implements PHPCI\Plugin
     }
 
     /**
-    * Runs PHP Spec tests.
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $curdir = getcwd();
@@ -142,7 +145,6 @@ class PhpSpec implements PHPCI\Plugin
         }
 
         $this->build->storeMeta('phpspec', $data);
-
 
         return $success;
     }

@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -13,14 +13,17 @@ use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
 use PHPCI\Plugin\Util\TapParser;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* PHP Unit Plugin - Allows PHP Unit testing.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * PHP Unit Plugin - Allows PHP Unit testing.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpUnit implements PluginInterface, PluginZeroConfigInterface
 {
     protected $args;
     protected $phpci;
@@ -50,11 +53,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     protected $xmlConfigFile;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -67,7 +66,9 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Try and find the phpunit XML config file.
+     *
      * @param $buildPath
+     *
      * @return null|string
      */
     public static function findConfigFile($buildPath)
@@ -138,8 +139,8 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-    * Runs PHP Unit tests in a specified directory, optionally using specified config file(s).
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         if (empty($this->xmlConfigFile) && empty($this->directory)) {
@@ -184,7 +185,9 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Run the tests defined in a PHPUnit config file.
+     *
      * @param $configPath
+     *
      * @return bool|mixed
      */
     protected function runConfigFile($configPath)
@@ -212,7 +215,9 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Run the PHPUnit tests in a specific directory or array of directories.
+     *
      * @param $directory
+     *
      * @return bool|mixed
      */
     protected function runDir($directory)
@@ -235,6 +240,7 @@ class PhpUnit implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     /**
      * @param $array
      * @param $callable
+     *
      * @return bool|mixed
      */
     protected function recurseArg($array, $callable)

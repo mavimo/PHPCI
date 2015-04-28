@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,19 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* PHP Docblock Checker Plugin - Checks your PHP files for appropriate uses of Docblocks
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * PHP Docblock Checker Plugin
+ *
+ * Checks your PHP files for appropriate uses of Docblocks.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpDocblockChecker implements PluginInterface, PluginZeroConfigInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -46,11 +51,7 @@ class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     protected $skipMethods = false;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -63,6 +64,7 @@ class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -97,7 +99,7 @@ class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-     * Runs PHP Mess Detector in a specified directory.
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -155,6 +157,7 @@ class PhpDocblockChecker implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Report all of the errors we've encountered line-by-line.
+     *
      * @param $output
      */
     protected function reportErrors($output)

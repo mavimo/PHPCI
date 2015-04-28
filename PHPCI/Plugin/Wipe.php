@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -11,14 +11,16 @@ namespace PHPCI\Plugin;
 
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* Wipe Plugin - Wipes a folder
-* @author       Claus Due <claus@namelesscoder.net>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Wipe implements \PHPCI\Plugin
+ * Wipe Plugin - Wipes a folder
+ *
+ * @author       Claus Due <claus@namelesscoder.net>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Wipe implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -34,6 +36,7 @@ class Wipe implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -47,8 +50,8 @@ class Wipe implements \PHPCI\Plugin
     }
 
     /**
-    * Wipes a directory's contents
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $build = $this->phpci->buildPath;

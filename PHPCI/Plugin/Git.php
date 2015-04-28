@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
  * Git plugin.
+ *
  * @author       Dan Cryer <dan@block8.co.uk>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Git implements \PHPCI\Plugin
+class Git implements PluginInterface
 {
     protected $phpci;
     protected $build;
@@ -27,6 +29,7 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -39,8 +42,7 @@ class Git implements \PHPCI\Plugin
     }
 
     /**
-     * Run the Git plugin.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -70,8 +72,10 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Determine which action to run, and run it.
+     *
      * @param $action
      * @param array $options
+     *
      * @return bool
      */
     protected function runAction($action, array $options = array())
@@ -96,6 +100,7 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Handle a merge action.
+     *
      * @param $options
      * @return bool
      */
@@ -110,6 +115,7 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Handle a tag action.
+     *
      * @param $options
      * @return bool
      */
@@ -132,6 +138,7 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Handle a pull action.
+     *
      * @param $options
      * @return bool
      */
@@ -153,6 +160,7 @@ class Git implements \PHPCI\Plugin
 
     /**
      * Handle a push action.
+     *
      * @param $options
      * @return bool
      */

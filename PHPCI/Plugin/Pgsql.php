@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PDO;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* PgSQL Plugin - Provides access to a PgSQL database.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Pgsql implements \PHPCI\Plugin
+ * PgSQL Plugin
+ *
+ * Provides access to a PgSQL database.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Pgsql implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -73,9 +77,8 @@ class Pgsql implements \PHPCI\Plugin
     }
 
     /**
-    * Connects to PgSQL and runs a specified set of queries.
-    * @return boolean
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         try {

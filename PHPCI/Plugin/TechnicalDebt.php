@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,15 +12,17 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* Technical Debt Plugin - Checks for existence of "TODO", "FIXME", etc.
-*
-* @author       James Inman <james@jamesinman.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class TechnicalDebt implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * Technical Debt Plugin - Checks for existence of "TODO", "FIXME", etc.
+ *
+ * @author       James Inman <james@jamesinman.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class TechnicalDebt implements PluginInterface, PluginZeroConfigInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -65,12 +67,7 @@ class TechnicalDebt implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
 
     /**
-     * Check if this plugin can be executed.
-     *
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -110,6 +107,7 @@ class TechnicalDebt implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Handle this plugin's options.
+     *
      * @param $options
      */
     protected function setOptions($options)
@@ -122,8 +120,8 @@ class TechnicalDebt implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-    * Runs the plugin
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $success = true;

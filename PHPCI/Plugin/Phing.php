@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,15 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * Phing Plugin - Provides access to Phing functionality.
+ * Phing Plugin
+ *
+ * Provides access to Phing functionality.
  *
  * @author       Pavel Pavlov <ppavlov@alera.ru>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Phing implements \PHPCI\Plugin
+class Phing implements PluginInterface
 {
 
     private $directory;
@@ -34,6 +37,7 @@ class Phing implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -43,9 +47,7 @@ class Phing implements \PHPCI\Plugin
         $this->setPhpci($phpci);
         $this->build = $build;
 
-        /*
-         * Set working directory
-         */
+        // Set working directory
         if (isset($options['directory'])) {
             $directory = $phpci->buildPath . '/' . $options['directory'];
         } else {
@@ -54,9 +56,7 @@ class Phing implements \PHPCI\Plugin
 
         $this->setDirectory($directory);
 
-        /*
-         * Sen name of a non default build file
-         */
+        // Set name of a non default build file
         if (isset($options['build_file'])) {
             $this->setBuildFile($options['build_file']);
         }
@@ -75,7 +75,7 @@ class Phing implements \PHPCI\Plugin
     }
 
     /**
-     * Executes Phing and runs a specified targets
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -97,7 +97,7 @@ class Phing implements \PHPCI\Plugin
     }
 
     /**
-     * @return \PHPCI\Builder
+     * @return Builder
      */
     public function getPhpci()
     {
@@ -105,7 +105,7 @@ class Phing implements \PHPCI\Plugin
     }
 
     /**
-     * @param \PHPCI\Builder $phpci
+     * @param Builder $phpci
      *
      * @return $this
      */
@@ -142,6 +142,7 @@ class Phing implements \PHPCI\Plugin
 
     /**
      * Converts an array of targets into a string.
+     *
      * @return string
      */
     private function targetsToString()
@@ -175,6 +176,7 @@ class Phing implements \PHPCI\Plugin
      * @param mixed $buildFile
      *
      * @return $this
+     *
      * @throws \Exception
      */
     public function setBuildFile($buildFile)
@@ -188,6 +190,7 @@ class Phing implements \PHPCI\Plugin
 
     /**
      * Get phing build file path.
+     *
      * @return string
      */
     public function getBuildFilePath()
@@ -208,10 +211,8 @@ class Phing implements \PHPCI\Plugin
      */
     public function propertiesToString()
     {
-        /**
-         * fix the problem when execute phing out of the build dir
-         * @ticket 748
-         */
+        // Fix the problem when execute phing out of the build dir
+        // @ticket 748
         if (!isset($this->properties['project.basedir'])) {
             $this->properties['project.basedir'] = $this->getDirectory();
         }
@@ -251,6 +252,7 @@ class Phing implements \PHPCI\Plugin
      * @param string $propertyFile
      *
      * @return $this
+     *
      * @throws \Exception
      */
     public function setPropertyFile($propertyFile)

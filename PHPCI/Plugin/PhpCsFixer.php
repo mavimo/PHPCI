@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* PHP CS Fixer - Works with the PHP CS Fixer for testing coding standards.
-* @author       Gabriel Baker <gabriel@autonomicpilot.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpCsFixer implements \PHPCI\Plugin
+ * PHP CS Fixer
+ *
+ * Works with the PHP CS Fixer for testing coding standards.
+ *
+ * @author       Gabriel Baker <gabriel@autonomicpilot.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpCsFixer implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -59,8 +63,7 @@ class PhpCsFixer implements \PHPCI\Plugin
     }
 
     /**
-     * Run PHP CS Fixer.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -79,6 +82,7 @@ class PhpCsFixer implements \PHPCI\Plugin
 
     /**
      * Build an args string for PHPCS Fixer.
+     *
      * @param $options
      */
     public function buildArgs($options)
@@ -98,6 +102,5 @@ class PhpCsFixer implements \PHPCI\Plugin
         if (isset($options['workingdir']) && $options['workingdir']) {
             $this->workingdir = $this->phpci->buildPath . $options['workingdir'];
         }
-
     }
 }

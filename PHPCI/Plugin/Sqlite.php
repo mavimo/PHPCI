@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PDO;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* SQLite Plugin — Provides access to a SQLite database.
-* @author       Corpsee <poisoncorpsee@gmail.com>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Sqlite implements \PHPCI\Plugin
+ * SQLite Plugin — Provides access to a SQLite database.
+ *
+ * @author       Corpsee <poisoncorpsee@gmail.com>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Sqlite implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -60,8 +62,7 @@ class Sqlite implements \PHPCI\Plugin
     }
 
     /**
-     * Connects to SQLite and runs a specified set of queries.
-     * @return boolean
+     * {@inheritDocs}
      */
     public function execute()
     {

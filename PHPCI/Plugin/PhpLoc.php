@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,30 +12,30 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
  * PHP Loc - Allows PHP Copy / Lines of Code testing.
+ *
  * @author       Johan van der Heide <info@japaveh.nl>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class PhpLoc implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+class PhpLoc implements PluginInterface, PluginZeroConfigInterface
 {
     /**
      * @var string
      */
     protected $directory;
+
     /**
      * @var \PHPCI\Builder
      */
     protected $phpci;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -48,6 +48,7 @@ class PhpLoc implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -64,7 +65,7 @@ class PhpLoc implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-     * Runs PHP Copy/Paste Detector in a specified directory.
+     * {@inheritDocs}
      */
     public function execute()
     {

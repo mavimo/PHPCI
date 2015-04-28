@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,12 +12,20 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * Atoum plugin, runs Atoum tests within a project.
- * @package PHPCI\Plugin
+ * Atoum plugin
+ *
+ * Runs Atoum tests within a project.
+ *
+ * @author       Sanpi <sanpi@homecomputing.fr>
+ * @author       André Cianfarani <acianfa@gmail.com>
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
  */
-class Atoum implements \PHPCI\Plugin
+class Atoum implements PluginInterface
 {
     private $args;
     private $config;
@@ -25,6 +33,7 @@ class Atoum implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -54,8 +63,7 @@ class Atoum implements \PHPCI\Plugin
     }
 
     /**
-     * Run the Atoum plugin.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -84,7 +92,7 @@ class Atoum implements \PHPCI\Plugin
             $status = false;
             $this->phpci->log(Lang::get('no_tests_performed'));
         }
-        
+
         return $status;
     }
 }

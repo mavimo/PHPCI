@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -13,14 +13,19 @@ use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
 use PHPCI\Helper\Lang;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* Composer Plugin - Provides access to Composer functionality.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Composer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * Composer Plugin
+ *
+ * Provides access to Composer functionality.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Composer implements PluginInterface, PluginZeroConfigInterface
 {
     protected $directory;
     protected $action;
@@ -29,11 +34,7 @@ class Composer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     protected $build;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -48,6 +49,7 @@ class Composer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -75,8 +77,8 @@ class Composer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-    * Executes Composer and runs a specified command (e.g. install / update)
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $composerLocation = $this->phpci->findBinary(array('composer', 'composer.phar'));

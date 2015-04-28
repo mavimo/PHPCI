@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,19 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* PHP Code Sniffer Plugin - Allows PHP Code Sniffer testing.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * PHP Code Sniffer Plugin
+ *
+ * Allows PHP Code Sniffer testing.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpCodeSniffer implements PluginInterface, PluginZeroConfigInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -73,11 +78,7 @@ class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     protected $ignore;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -129,6 +130,7 @@ class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Handle this plugin's options.
+     *
      * @param $options
      */
     protected function setOptions($options)
@@ -141,8 +143,8 @@ class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-    * Runs PHP Code Sniffer in a specified directory, to a specified standard.
-    */
+     * {@inheritDocs}
+      */
     public function execute()
     {
         list($ignore, $standard, $suffixes) = $this->getFlags();
@@ -185,6 +187,7 @@ class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Process options and produce an arguments string for PHPCS.
+     *
      * @return array
      */
     protected function getFlags()
@@ -210,8 +213,11 @@ class PhpCodeSniffer implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Process the PHPCS output report.
+     *
      * @param $output
+     *
      * @return array
+     *
      * @throws \Exception
      */
     protected function processReport($output)

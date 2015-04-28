@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,15 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * Campfire Plugin - Allows Campfire API actions.
- * strongly based on icecube (http://labs.mimmin.com/icecube)
+ * Campfire Plugin
+ *
+ * Allows Campfire API actions, strongly based on icecube (http://labs.mimmin.com/icecube)
+ *
  * @author       André Cianfarani <acianfa@gmail.com>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Campfire implements \PHPCI\Plugin
+class Campfire implements PluginInterface
 {
     private $url;
     private $authToken;
@@ -31,6 +34,7 @@ class Campfire implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -58,8 +62,7 @@ class Campfire implements \PHPCI\Plugin
     }
 
     /**
-     * Run the Campfire plugin.
-     * @return bool|mixed
+     * {@inheritDocs}
      */
     public function execute()
     {

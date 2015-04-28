@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
  * Shell Plugin - Allows execute shell commands.
+ *
  * @author       Kinn Coelho Julião <kinncj@gmail.com>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Shell implements \PHPCI\Plugin
+class Shell implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -75,7 +77,7 @@ class Shell implements \PHPCI\Plugin
     }
 
     /**
-     * Runs the shell command.
+     * {@inheritDocs}
      */
     public function execute()
     {

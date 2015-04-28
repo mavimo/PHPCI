@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * PHP Lint Plugin - Provides access to PHP lint functionality.
+ * PHP Lint Plugin
+ *
+ * Provides access to PHP lint functionality.
+ *
  * @author       Dan Cryer <dan@block8.co.uk>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Lint implements PHPCI\Plugin
+class Lint implements PluginInterface
 {
     protected $directories;
     protected $recursive = true;
@@ -60,7 +64,7 @@ class Lint implements PHPCI\Plugin
     }
 
     /**
-     * Executes parallel lint
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -82,9 +86,11 @@ class Lint implements PHPCI\Plugin
 
     /**
      * Lint an item (file or directory) by calling the appropriate method.
+     *
      * @param $php
      * @param $item
      * @param $itemPath
+     *
      * @return bool
      */
     protected function lintItem($php, $item, $itemPath)
@@ -102,8 +108,10 @@ class Lint implements PHPCI\Plugin
 
     /**
      * Run php -l against a directory of files.
+     *
      * @param $php
      * @param $path
+     *
      * @return bool
      */
     protected function lintDirectory($php, $path)
@@ -132,8 +140,10 @@ class Lint implements PHPCI\Plugin
 
     /**
      * Run php -l against a specific file.
+     *
      * @param $php
      * @param $path
+     *
      * @return bool
      */
     protected function lintFile($php, $path)

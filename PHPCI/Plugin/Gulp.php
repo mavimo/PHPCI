@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -11,14 +11,18 @@ namespace PHPCI\Plugin;
 
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* Gulp Plugin - Provides access to gulp functionality.
-* @author       Dirk Heilig <dirk@heilig-online.com>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Gulp implements \PHPCI\Plugin
+ * Gulp Plugin
+ *
+ * Provides access to gulp functionality.
+ *
+ * @author       Dirk Heilig <dirk@heilig-online.com>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Gulp implements PluginInterface
 {
     protected $directory;
     protected $task;
@@ -69,8 +73,8 @@ class Gulp implements \PHPCI\Plugin
     }
 
     /**
-    * Executes gulp and runs a specified command (e.g. install / update)
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         // if npm does not work, we cannot use gulp, so we return false

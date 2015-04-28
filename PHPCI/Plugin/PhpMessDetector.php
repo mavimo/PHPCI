@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,17 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
+use PHPCI\PluginZeroConfigInterface;
 
 /**
-* PHP Mess Detector Plugin - Allows PHP Mess Detector testing.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
+ * PHP Mess Detector Plugin - Allows PHP Mess Detector testing.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpMessDetector implements PluginInterface, PluginZeroConfigInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -56,11 +59,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     protected $rules;
 
     /**
-     * Check if this plugin can be executed.
-     * @param $stage
-     * @param Builder $builder
-     * @param Build $build
-     * @return bool
+     * {@inheritDocs}
      */
     public static function canExecute($stage, Builder $builder, Build $build)
     {
@@ -111,7 +110,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
     }
 
     /**
-     * Runs PHP Mess Detector in a specified directory.
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -132,6 +131,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Override a default setting.
+     *
      * @param $options
      * @param $key
      */
@@ -144,8 +144,11 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Process PHPMD's XML output report.
+     *
      * @param $xmlString
+     *
      * @return array
+     *
      * @throws \Exception
      */
     protected function processReport($xmlString)
@@ -186,6 +189,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Try and process the rules parameter from phpci.yml.
+     *
      * @return bool
      */
     protected function tryAndProcessRules()
@@ -206,6 +210,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Execute PHP Mess Detector.
+     *
      * @param $binaryPath
      */
     protected function executePhpMd($binaryPath)
@@ -242,6 +247,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
 
     /**
      * Get the path PHPMD should be run against.
+     *
      * @return string
      */
     protected function getTargetPath()
@@ -258,6 +264,7 @@ class PhpMessDetector implements PHPCI\Plugin, PHPCI\ZeroConfigPlugin
      * Returns a boolean indicating if the error count can be considered a success.
      *
      * @param int $errorCount
+     *
      * @return bool
      */
     protected function wasLastExecSuccessful($errorCount)

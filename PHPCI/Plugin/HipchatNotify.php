@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * Hipchat Plugin
+ * Hipchat Plugin.
+ *
+ * Send build notification in HipChat.
+ *
  * @author       James Inman <james@jamesinman.co.uk>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class HipchatNotify implements \PHPCI\Plugin
+class HipchatNotify implements PluginInterface
 {
     protected $authToken;
     protected $color;
@@ -27,9 +31,11 @@ class HipchatNotify implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
+     *
      * @throws \Exception
      */
     public function __construct(Builder $phpci, Build $build, array $options = array())
@@ -68,8 +74,7 @@ class HipchatNotify implements \PHPCI\Plugin
     }
 
     /**
-     * Run the HipChat plugin.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {

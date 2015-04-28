@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* Php Parallel Lint Plugin - Provides access to PHP lint functionality.
-* @author       Vaclav Makes <vaclav@makes.cz>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpParallelLint implements \PHPCI\Plugin
+ * Php Parallel Lint Plugin - Provides access to PHP lint functionality.
+ *
+ * @author       Vaclav Makes <vaclav@makes.cz>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpParallelLint implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -70,8 +72,8 @@ class PhpParallelLint implements \PHPCI\Plugin
     }
 
     /**
-    * Executes parallel lint
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         list($ignore) = $this->getFlags();
@@ -97,6 +99,7 @@ class PhpParallelLint implements \PHPCI\Plugin
 
     /**
      * Produce an argument string for PHP Parallel Lint.
+     *
      * @return array
      */
     protected function getFlags()

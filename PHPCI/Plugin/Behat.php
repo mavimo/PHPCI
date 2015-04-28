@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
  * Behat BDD Plugin
+ *
  * @author       Dan Cryer <dan@block8.co.uk>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Behat implements \PHPCI\Plugin
+class Behat implements PluginInterface
 {
     protected $phpci;
     protected $build;
@@ -55,7 +57,7 @@ class Behat implements \PHPCI\Plugin
     }
 
     /**
-     * Runs Behat tests.
+     * {@inheritDocs}
      */
     public function execute()
     {

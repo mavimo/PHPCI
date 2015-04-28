@@ -1,16 +1,31 @@
 <?php
+/**
+ * PHPCI - Continuous Integration for PHP
+ *
+ * @copyright    Copyright 2015, Block 8 Limited.
+ * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
+ * @link         https://www.phptesting.org/
+ */
+
 namespace PHPCI\Plugin;
 
 use Exception;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 use Phar as PHPPhar;
 
 /**
  * Phar Plugin
+ *
+ * Plugin to generate php package using phar format.
+ *
+ * @author       Wanderson <wandersonwhcr@gmail.com>
+ * @package      PHPCI
+ * @subpackage   Plugins
  */
-class Phar implements \PHPCI\Plugin
+class Phar implements PluginInterface
 {
     /**
      * PHPCI
@@ -111,6 +126,7 @@ class Phar implements \PHPCI\Plugin
      * Directory Setter
      *
      * @param  string $directory Configuration Value
+     *
      * @return Phar   Fluent Interface
      */
     public function setDirectory($directory)
@@ -136,6 +152,7 @@ class Phar implements \PHPCI\Plugin
      * Filename Setter
      *
      * @param  string $filename Configuration Value
+     *
      * @return Phar   Fluent Interface
      */
     public function setFilename($filename)
@@ -161,6 +178,7 @@ class Phar implements \PHPCI\Plugin
      * Regular Expression Setter
      *
      * @param  string $regexp Configuration Value
+     *
      * @return Phar   Fluent Interface
      */
     public function setRegExp($regexp)
@@ -186,6 +204,7 @@ class Phar implements \PHPCI\Plugin
      * Stub Filename Setter
      *
      * @param  string $stub Configuration Value
+     *
      * @return Phar   Fluent Interface
      */
     public function setStub($stub)
@@ -206,6 +225,7 @@ class Phar implements \PHPCI\Plugin
 
     /**
      * Get stub content for the Phar file.
+     *
      * @return string
      */
     public function getStubContent()
@@ -219,8 +239,7 @@ class Phar implements \PHPCI\Plugin
     }
 
     /**
-     * Run the phar plugin.
-     * @return bool
+     * {@inheritDocs}
      */
     public function execute()
     {

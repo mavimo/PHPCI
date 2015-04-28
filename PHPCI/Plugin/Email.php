@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -14,14 +14,18 @@ use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
 use PHPCI\Helper\Email as EmailHelper;
+use PHPCI\PluginInterface;
 
 /**
-* Email Plugin - Provides simple email capability to PHPCI.
-* @author       Steve Brazier <meadsteve@gmail.com>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class Email implements \PHPCI\Plugin
+ * Email Plugin
+ *
+ * Provides simple email capability to PHPCI.
+ *
+ * @author       Steve Brazier <meadsteve@gmail.com>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class Email implements PluginInterface
 {
     /**
      * @var \PHPCI\Builder
@@ -40,6 +44,7 @@ class Email implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param \Swift_Mailer $mailer
@@ -56,7 +61,7 @@ class Email implements \PHPCI\Plugin
     }
 
     /**
-     * Send a notification mail.
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -91,11 +96,14 @@ class Email implements \PHPCI\Plugin
     }
 
     /**
-     * @param string $toAddress Single address to send to
-     * @param string[] $ccList
-     * @param string $subject Email subject
-     * @param string $body Email body
-     * @return array                      Array of failed addresses
+     * Send a mail using the specified information.
+     *
+     * @param string    $toAddress  Single address to send to
+     * @param string[]  $ccList     List of user to CC
+     * @param string    $subject    Email subject
+     * @param string    $body       Email body
+     *
+     * @return array                Array of failed addresses
      */
     public function sendEmail($toAddress, $ccList, $subject, $body)
     {
@@ -118,14 +126,11 @@ class Email implements \PHPCI\Plugin
     /**
      * Send an email to a list of specified subjects.
      *
-     * @param array $toAddresses
-     *   List of destinatary of message.
-     * @param string $subject
-     *   Mail subject
-     * @param string $body
-     *   Mail body
+     * @param array  $toAddresses List of destinatary of message.
+     * @param string $subject     Mail subject
+     * @param string $body        Mail body
      *
-     * @return int number of failed messages
+     * @return int                number of failed messages
      */
     public function sendSeparateEmails(array $toAddresses, $subject, $body)
     {
@@ -142,6 +147,7 @@ class Email implements \PHPCI\Plugin
 
     /**
      * Get the list of email addresses to send to.
+     *
      * @return array
      */
     protected function getEmailAddresses()
@@ -168,6 +174,7 @@ class Email implements \PHPCI\Plugin
 
     /**
      * Get the list of email addresses to CC.
+     *
      * @return array
      */
     protected function getCcAddresses()

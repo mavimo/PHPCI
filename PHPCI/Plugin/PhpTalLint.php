@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,16 @@ namespace PHPCI\Plugin;
 use PHPCI;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
  * PHPTAL Lint Plugin - Provides access to PHPTAL lint functionality.
+ *
  * @author       Stephen Ball <phpci@stephen.rebelinblue.com>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class PhpTalLint implements PHPCI\Plugin
+class PhpTalLint implements PluginInterface
 {
     protected $directories;
     protected $recursive = true;
@@ -27,12 +29,12 @@ class PhpTalLint implements PHPCI\Plugin
     protected $ignore;
 
     /**
-     * @var \PHPCI\Builder
+     * @var Builder
      */
     protected $phpci;
 
     /**
-     * @var \PHPCI\Model\Build
+     * @var Build
      */
     protected $build;
 
@@ -87,6 +89,7 @@ class PhpTalLint implements PHPCI\Plugin
 
     /**
      * Handle this plugin's options.
+     *
      * @param $options
      */
     protected function setOptions($options)
@@ -99,7 +102,7 @@ class PhpTalLint implements PHPCI\Plugin
     }
 
     /**
-     * Executes phptal lint
+     * {@inheritDocs}
      */
     public function execute()
     {
@@ -143,8 +146,10 @@ class PhpTalLint implements PHPCI\Plugin
 
     /**
      * Lint an item (file or directory) by calling the appropriate method.
+     *
      * @param $item
      * @param $itemPath
+     *
      * @return bool
      */
     protected function lintItem($item, $itemPath)
@@ -164,7 +169,9 @@ class PhpTalLint implements PHPCI\Plugin
 
     /**
      * Run phptal lint against a directory of files.
+     *
      * @param $path
+     *
      * @return bool
      */
     protected function lintDirectory($path)
@@ -193,7 +200,9 @@ class PhpTalLint implements PHPCI\Plugin
 
     /**
      * Run phptal lint against a specific file.
+     *
      * @param $path
+     *
      * @return bool
      */
     protected function lintFile($path)
@@ -222,7 +231,7 @@ class PhpTalLint implements PHPCI\Plugin
 
                 $row = str_replace('(use -i to include your custom modifier functions)', '', $row);
                 $message = str_replace($name . ': ', '', $row);
-                
+
                 $parts = explode(' (line ', $message);
 
                 $message = trim($parts[0]);
@@ -244,6 +253,7 @@ class PhpTalLint implements PHPCI\Plugin
 
     /**
      * Process options and produce an arguments string for PHPTAL Lint.
+     *
      * @return array
      */
     protected function getFlags()

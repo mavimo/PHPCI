@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
-* PHP Copy / Paste Detector - Allows PHP Copy / Paste Detector testing.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class PhpCpd implements \PHPCI\Plugin
+ * PHP Copy / Paste Detector.
+ *
+ * Allows PHP Copy / Paste Detector testing.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class PhpCpd implements PluginInterface
 {
     protected $directory;
     protected $args;
@@ -39,6 +43,7 @@ class PhpCpd implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -66,8 +71,8 @@ class PhpCpd implements \PHPCI\Plugin
     }
 
     /**
-    * Runs PHP Copy/Paste Detector in a specified directory.
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $ignore = '';
@@ -108,8 +113,11 @@ class PhpCpd implements \PHPCI\Plugin
 
     /**
      * Process the PHPCPD XML report.
+     *
      * @param $xmlString
+     *
      * @return array
+     *
      * @throws \Exception
      */
     protected function processReport($xmlString)

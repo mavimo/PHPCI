@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Model\Build;
 use PHPCI\Helper\Lang;
+use PHPCI\PluginInterface;
 
 /**
-* Copy Build Plugin - Copies the entire build to another directory.
-* @author       Dan Cryer <dan@block8.co.uk>
-* @package      PHPCI
-* @subpackage   Plugins
-*/
-class CopyBuild implements \PHPCI\Plugin
+ * Copy Build Plugin
+ *
+ * Copies the entire build to another directory.
+ *
+ * @author       Dan Cryer <dan@block8.co.uk>
+ * @package      PHPCI
+ * @subpackage   Plugins
+ */
+class CopyBuild implements PluginInterface
 {
     protected $directory;
     protected $ignore;
@@ -29,6 +33,7 @@ class CopyBuild implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -44,8 +49,8 @@ class CopyBuild implements \PHPCI\Plugin
     }
 
     /**
-    * Copies files from the root of the build directory into the target folder
-    */
+     * {@inheritDocs}
+     */
     public function execute()
     {
         $build = $this->phpci->buildPath;
@@ -70,6 +75,7 @@ class CopyBuild implements \PHPCI\Plugin
 
     /**
      * Wipe the destination directory if it already exists.
+     *
      * @throws \Exception
      */
     protected function wipeExistingDirectory()

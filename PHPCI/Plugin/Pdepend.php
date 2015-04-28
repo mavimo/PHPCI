@@ -2,7 +2,7 @@
 /**
  * PHPCI - Continuous Integration for PHP
  *
- * @copyright    Copyright 2014, Block 8 Limited.
+ * @copyright    Copyright 2015, Block 8 Limited.
  * @license      https://github.com/Block8/PHPCI/blob/master/LICENSE.md
  * @link         https://www.phptesting.org/
  */
@@ -12,14 +12,18 @@ namespace PHPCI\Plugin;
 use PHPCI\Builder;
 use PHPCI\Helper\Lang;
 use PHPCI\Model\Build;
+use PHPCI\PluginInterface;
 
 /**
- * Pdepend Plugin - Allows Pdepend report
+ * Pdepend Plugin
+ *
+ * Allows Pdepend report
+ *
  * @author       Johan van der Heide <info@japaveh.nl>
  * @package      PHPCI
  * @subpackage   Plugins
  */
-class Pdepend implements \PHPCI\Plugin
+class Pdepend implements PluginInterface
 {
     protected $args;
     /**
@@ -50,6 +54,7 @@ class Pdepend implements \PHPCI\Plugin
 
     /**
      * Set up the plugin, configure options, etc.
+     *
      * @param Builder $phpci
      * @param Build $build
      * @param array $options
@@ -69,7 +74,7 @@ class Pdepend implements \PHPCI\Plugin
     }
 
     /**
-     * Runs Pdepend with the given criteria as arguments
+     * {@inheritDocs}
      */
     public function execute()
     {
